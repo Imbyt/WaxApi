@@ -82,6 +82,11 @@ def creating_rune_dictionary():
         rune_dict[rarity] = values
     return rune_dict
 
+def get_spn_price():
+    response = requests.get('https://wax.alcor.exchange/api/markets/792')
+    last_price = response.json()['last_price']
+    rounded_lp = round(last_price, 4)
+    return rounded_lp
 
 def main(command):
     commmand_dict = {
@@ -89,11 +94,13 @@ def main(command):
         "rune": creating_rune_dictionary()
     }
     what_do = commmand_dict[command]
+
     return what_do
 
 
 if __name__ == '__main__':
     main()
+    get_spn_price()
 # Script will not run unless activated with a main w/argument passed
 
 
