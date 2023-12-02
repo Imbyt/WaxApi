@@ -2,75 +2,56 @@ import requests
 from tkinter import *
 
 
+def getting_template_id(rarity):
+    template_id_dict = {
+        'common': 716922,
+        'uncommon': 750023,
+        'rare': 716924,
+        'epic': 716925,
+        'legendary': 716926
+    }
+    template_id = template_id_dict[rarity]
+    return template_id
+
+def getting_ticket_cost(rarity, cost):
+    rarity_tickets_dict = {
+        'common': 20,
+        'uncommon': 40,
+        'rare': 80,
+        'epic': 160,
+        'legendary': 320
+    }
+    ticket_amount = rarity_tickets_dict[rarity]
+    final_cost = (cost/ticket_amount)
+    return final_cost
+
+
+def getting_pip_value(rarity, cost):
+    rarity_pip_dict = {
+        'common': 120,
+        'uncommon': 240,
+        'rare': 480,
+        'epic': 960,
+        'legendary': 1920
+    }
+    pip_amount = rarity_pip_dict[rarity]
+    final_cost = (cost / pip_amount)
+    return final_cost
 
 def main():
-    def getting_rarity(rarity):
-        if rarity == "common":
-            common = 716922
-            return common
-        elif rarity == "uncommon":
-            uncommon = 750023
-            return uncommon
-        elif rarity == "rare":
-            rare = 716924
-            return rare
-        elif rarity == "epic":
-            epic = 716925
-            return epic
-        elif rarity == "legendary":
-            legendary = 716926
-            return legendary
-
-
-    def getting_ticket_cost(rarity, cost):
-        if rarity == "common":
-            ticket_cost = str(cost / 20)
-            return ticket_cost
-        elif rarity == "uncommon":
-            ticket_cost = str(cost / 40)
-            return ticket_cost
-        elif rarity == "rare":
-            ticket_cost = str(cost / 80)
-            return ticket_cost
-        elif rarity == "epic":
-            ticket_cost = str(cost / 160)
-            return ticket_cost
-        elif rarity == "legendary":
-            ticket_cost = str(cost / 160)
-            return ticket_cost
-
-
-    def getting_pip_value(rarity, cost):
-        if rarity == "common":
-            pip_cost = str(cost / 120)
-            return pip_cost
-        elif rarity == "uncommon":
-            pip_cost = str(cost / 240)
-            return pip_cost
-        elif rarity == "rare":
-            pip_cost = str(cost / 480)
-            return pip_cost
-        elif rarity == "epic":
-            pip_cost = str(cost / 960)
-            return pip_cost
-        elif rarity == "legendary":
-            pip_cost = str(cost / 1920)
-            return pip_cost
-
-
     rarities = ("common", "uncommon", "rare", "epic", "legendary")
-    for rarities in rarities:
-        # here I am calling getting_rarity to get the correct template id to pass into my api address
-        template_id = getting_rarity(rarities)
+    for rarity in rarities:
+        template_id = getting_template_id(rarity)
         response = requests.get(f'https://wax.api.atomicassets.io/atomicmarket/v1/prices/templates?collection_name=spinniaworld&schema_name=spinney&template_id={template_id}&burned=false&symbol=WAX&page=1&limit=100&order=desc')
         median = int(response.json()['data'][0]["suggested_median"])
-        # correcting the number
         suggested_median = (median / 10 ** 8)
-        # here I am passing the initial rarity input and suggested medium after api call to get an avg ticket price
-        avg_ticket_cost = getting_ticket_cost(rarities, suggested_median)
-        avg_pip_cost = getting_pip_value(rarities, suggested_median)
-        values = [rarities.capitalize(), suggested_median, avg_ticket_cost, avg_pip_cost]
-        return values
+        avg_ticket_cost = getting_ticket_cost(rarity, suggested_median)
+        avg_pip_cost = getting_pip_value(rarity, suggested_median)
+        value_set = []
+        values = [rarity.capitalize(), suggested_median, avg_ticket_cost, avg_pip_cost]
+    for rarity in rarities:
+        value_set.extend(values)
+    return value_set
 
 
 #       print(f'{x.capitalize()} is currently on average {suggested_median} WAX.')
@@ -80,7 +61,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
 
