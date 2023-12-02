@@ -1,5 +1,4 @@
 import spinnia_calc
-from spn_price import spin_price_main
 from tkinter import *
 from PIL import Image, ImageTk
 
@@ -34,7 +33,7 @@ calculate_rune_button.grid(row=2, column=1)
 quit_button = Button(win, text="Quit", width=25, command=quit_window)
 quit_button.grid(row=3, column=1)
 
-spn_price_label = Label(win, text=("SPN/WAX:", spin_price_main()), )
+spn_price_label = Label(win, text=("SPN/WAX:", spinnia_calc.get_spn_price(), ))
 spn_price_label.grid(row=4, column=1)
 
 common_spinney_image_file = Image.open("images\\common_spinney.png")
