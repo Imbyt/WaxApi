@@ -1,7 +1,7 @@
 import spinnia_calc
 from tkinter import *
 from PIL import Image, ImageTk
-
+from testing import get_spinney
 
 def get_spinney_info():
     data_label = Label(win, text=spinnia_calc.main("spinney"))
@@ -41,6 +41,9 @@ common_spinney_image_file = common_spinney_image_file.resize((100, 125))
 img1 = ImageTk.PhotoImage(common_spinney_image_file)
 img1_label = Label(image=img1)
 img1_label.grid(row=5, column=1)
+
+label = Label(win, text=get_spinney("common"))
+label.grid(row=6, column=1)
 
 # run
 win.mainloop()
