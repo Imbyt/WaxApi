@@ -55,11 +55,19 @@ def get_rune(rarity):
     return Rune.template_price(rune_dict[rarity])
 
 
-def get_spinney(rarity):
+def price(rarity):
     spinney = spinney_dict[rarity]
-    print(spinney.calc_tickets())
+    return spinney.template_price()
 
 
+def tickets(rarity):
+    spinney = spinney_dict[rarity]
+    return spinney.calc_tickets()
+
+
+def pap(rarity):
+    spinney = spinney_dict[rarity]
+    return spinney.calc_pap()
 
 
 # in main I should have a label call to specific function defined within the class, also solves the problem of displaying the information correctly and where I would like
