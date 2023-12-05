@@ -1,7 +1,8 @@
 import spinnia_calc
 from tkinter import *
 from PIL import Image, ImageTk
-from testing import get_spinney
+from testing import price, pap, tickets
+
 
 def get_spinney_info():
     data_label = Label(win, text=spinnia_calc.main("spinney"))
@@ -38,12 +39,19 @@ spn_price_label.grid(row=4, column=1)
 
 common_spinney_image_file = Image.open("images\\common_spinney.png")
 common_spinney_image_file = common_spinney_image_file.resize((100, 125))
+
 img1 = ImageTk.PhotoImage(common_spinney_image_file)
 img1_label = Label(image=img1)
 img1_label.grid(row=5, column=1)
 
-label = Label(win, text=get_spinney("common"))
-label.grid(row=6, column=1)
+price_common = Label(win, text=f'Cost: {price("common")} WAX')
+price_common.grid(row=6, column=1)
+
+tickets_common = Label(win, text=f'Ticket: {tickets("common")} WAX')
+tickets_common.grid(row=7, column=1)
+
+pap_common = Label(win, text=f'Pap: {pap("common")} WAX')
+pap_common.grid(row=8, column=1)
 
 # run
 win.mainloop()
